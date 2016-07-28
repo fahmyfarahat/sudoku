@@ -1,0 +1,18 @@
+<table class="">
+  <tr ng-repeat="rows in sudokuBoard">
+    <td
+    ng-repeat="cell in rows track by $index"
+    ng-class="{'board': cell !== 0}" 
+    class="{{classError($index, rows)}}"
+    >
+    <input 
+    ng-if="cell === 0"
+    type="number"
+    ng-model="modal"
+    ng-change="edit($index, modal, rows)"
+    class="form-control" 
+    />
+    <span ng-if="cell !== 0">{{cell}}</span>
+    </td>
+  </tr>
+</table>
