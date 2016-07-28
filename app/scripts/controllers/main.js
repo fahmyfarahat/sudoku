@@ -35,7 +35,7 @@
         };
 
         scope.edit = function(col, value, rows) {
-            if (((value > 0) && (value < 10))) {
+            if ((value > 0) && (value < 10)) {
                 scope.error = false;
                 scope.currentRow = scope.sudokuBoard.indexOf(rows);
                 scope.currentCol = col;

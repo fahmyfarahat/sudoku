@@ -1,9 +1,11 @@
 # sudoku-board
 
-## Build & development
+## Getting Started
 
-Run `grunt` for building and `grunt serve` for preview.
+* cd sudoku/
 
-## Testing
-
-Running `grunt test` will run the unit tests with karma.
+* Run `npm install`.
+* Run `bower install`.
+* Run `grunt serve` to preview and watch for changes.
+* Run `grunt` to build your webapp for production.
+* Run `grunt serve:dist` to preview the production build.
