@@ -9,7 +9,7 @@
 (function(){
     function controller(scope, SudokuService){
         
-        scope.modal = null;
+        scope.value = null;
 
         function success(response) {
             scope.sudokuBoard = response.data.sudokuBoard;
@@ -34,22 +34,27 @@
             return conflictRow +''+index;
         };
 
-        scope.edit = function(col, modal, rows) {    
-            scope.currentRow = scope.sudokuBoard.indexOf(rows);
-            scope.currentCol = col;
-            var data = {
-                'moveRow': scope.currentRow,
-                'moveColumn': scope.currentCol,
-                'moveValue': modal
-            };
-            scope.sudokuBoard[scope.currentRow][scope.currentCol] = modal;
+        scope.edit = function(col, value, rows) {
+            if (((value > 0) && (value < 10))) {
+                scope.error = false;
+                scope.currentRow = scope.sudokuBoard.indexOf(rows);
+                scope.currentCol = col;
+                var data = {
+                    'moveRow': scope.currentRow,
+                    'moveColumn': scope.currentCol,
+                    'moveValue': value
+                };
+                scope.sudokuBoard[scope.currentRow][scope.currentCol] = value;
 
-            // Change val of sudokuBoard.
-            data.sudokuBoard = scope.sudokuBoard;
-            SudokuService.editBoard(data)
-            .then(function(response){
-                scope.sudokuBoard = response.data.board;
-            }, error);
+                // Change val of sudokuBoard.
+                data.sudokuBoard = scope.sudokuBoard;
+                SudokuService.editBoard(data)
+                .then(function(response){
+                    scope.sudokuBoard = response.data.board;
+                }, error);
+            }else{
+                scope.error = true;
+            }
         };
 
 
