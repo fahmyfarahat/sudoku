@@ -10,7 +10,7 @@
     function controller(scope, SudokuService){
 
         function success(response) {
-            scope.orignalBoard = response.data.sudokuBoard;
+            scope.originalBoard = response.data.sudokuBoard;
             scope.sudokuBoard = SudokuService.sudokuBoardBuilder(response.data.sudokuBoard, false);
         }
 
@@ -32,8 +32,8 @@
                 'moveValue': model.val
             };
             if ((model.val > 0) && (model.val < 10)) {
-                scope.orignalBoard[model.rowNum][model.colNum] = model.val;
-                scope.data.sudokuBoard = scope.orignalBoard; 
+                scope.originalBoard[model.rowNum][model.colNum] = model.val;
+                scope.data.sudokuBoard = scope.originalBoard; 
                 SudokuService.editBoard(scope.data)
                 .then(function(response){
                     scope.sudokuBoard = SudokuService.sudokuBoardBuilder(response.data.board, true);
