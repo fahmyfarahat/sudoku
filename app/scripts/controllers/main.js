@@ -18,8 +18,8 @@
             if (response.statusText === 'Conflict') {
                 var conflictRow = response.data.conflictRow;
                 var conflictColumn = response.data.conflictColumn;
-                scope.sudokuBoard[conflictRow][conflictColumn]['error'] = true;
-                scope.sudokuBoard[scope.data.moveRow][scope.data.moveColumn]['error'] = true;
+                scope.sudokuBoard[conflictRow][conflictColumn].error = true;
+                scope.sudokuBoard[scope.data.moveRow][scope.data.moveColumn].error = true;
             } 
         }
 
@@ -32,15 +32,15 @@
                 'moveValue': model.val
             };
             if ((model.val > 0) && (model.val < 10)) {
-                scope.orignalBoard[model.rowNum][model.colNum] = model.val
-                scope.data['sudokuBoard'] = scope.orignalBoard; 
+                scope.orignalBoard[model.rowNum][model.colNum] = model.val;
+                scope.data.sudokuBoard = scope.orignalBoard; 
                 SudokuService.editBoard(scope.data)
                 .then(function(response){
                     scope.sudokuBoard = SudokuService.sudokuBoardBuilder(response.data.board, true);
-                    scope.sudokuBoard[scope.data.moveRow][scope.data.moveColumn]['valid'] = true;
+                    scope.sudokuBoard[scope.data.moveRow][scope.data.moveColumn].valid = true;
                 }, error);
             }else{
-                scope.sudokuBoard[scope.data.moveRow][scope.data.moveColumn]['error'] = true;
+                scope.sudokuBoard[scope.data.moveRow][scope.data.moveColumn].error = true;
             }
         };
 

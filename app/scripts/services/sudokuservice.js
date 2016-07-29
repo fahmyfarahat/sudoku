@@ -21,9 +21,9 @@
                     'colNum':i,
                 };
                 if (val[i] !== 0) {
-                    data[i]['val'] = val[i];
-                    data[i]['resolved'] = true;
-                    data[i]['isNewResolve'] = (isNewResolve) ? true: false;
+                    data[i].val = val[i];
+                    data[i].resolved = true;
+                    data[i].isNewResolve = (isNewResolve) ? true: false;
                 }
             }
             return data;
@@ -43,7 +43,7 @@
                 sudokuBoard.push(_RowsBuilder(data[i], i, isNewResolve));
             }
             return sudokuBoard;
-        }
+        };
 
         return sudoku;
     }
