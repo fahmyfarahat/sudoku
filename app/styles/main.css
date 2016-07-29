@@ -13,11 +13,17 @@ table {
   margin:1em auto;
   width: 80%;
 }
-td.board{
+td .board{
   background-color: #ccc;
 }
-td.error span{
+td .error{
   color: red;
+}
+td .success{
+  color: blue;
+}
+td .valid {
+  color: blue;
 }
 td {
   height:30px;

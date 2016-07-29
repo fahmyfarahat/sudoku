@@ -8,52 +8,39 @@
  */
 (function(){
     function controller(scope, SudokuService){
-        
-        scope.value = null;
 
         function success(response) {
-            scope.sudokuBoard = response.data.sudokuBoard;
+            scope.orignalBoard = response.data.sudokuBoard;
+            scope.sudokuBoard = SudokuService.sudokuBoardBuilder(response.data.sudokuBoard, false);
         }
 
         function error(response) {
-            console.log('Error: ', response);
             if (response.statusText === 'Conflict') {
                 var conflictRow = response.data.conflictRow;
                 var conflictColumn = response.data.conflictColumn;
-                //useing jQuery just to appeand error class.
-                $('.'+conflictRow+''+conflictColumn).addClass('error');
-                //Reset Edited
-                scope.sudokuBoard[scope.currentRow][scope.currentCol] = 0;
+                scope.sudokuBoard[conflictRow][conflictColumn]['error'] = true;
+                scope.sudokuBoard[scope.data.moveRow][scope.data.moveColumn]['error'] = true;
             } 
         }
 
         SudokuService.getBoard().then(success, error);
 
-        scope.classError = function(index, rows){
-            var conflictRow = scope.sudokuBoard.indexOf(rows);
-            return conflictRow +''+index;
-        };
-
-        scope.edit = function(col, value, rows) {
-            if ((value > 0) && (value < 10)) {
-                scope.error = false;
-                scope.currentRow = scope.sudokuBoard.indexOf(rows);
-                scope.currentCol = col;
-                var data = {
-                    'moveRow': scope.currentRow,
-                    'moveColumn': scope.currentCol,
-                    'moveValue': value
-                };
-                scope.sudokuBoard[scope.currentRow][scope.currentCol] = value;
-
-                // Change val of sudokuBoard.
-                data.sudokuBoard = scope.sudokuBoard;
-                SudokuService.editBoard(data)
+        scope.edit = function(model) {
+            scope.data = {
+                'moveRow': model.rowNum,
+                'moveColumn': model.colNum,
+                'moveValue': model.val
+            };
+            if ((model.val > 0) && (model.val < 10)) {
+                scope.orignalBoard[model.rowNum][model.colNum] = model.val
+                scope.data['sudokuBoard'] = scope.orignalBoard; 
+                SudokuService.editBoard(scope.data)
                 .then(function(response){
-                    scope.sudokuBoard = response.data.board;
+                    scope.sudokuBoard = SudokuService.sudokuBoardBuilder(response.data.board, true);
+                    scope.sudokuBoard[scope.data.moveRow][scope.data.moveColumn]['valid'] = true;
                 }, error);
             }else{
-                scope.error = true;
+                scope.sudokuBoard[scope.data.moveRow][scope.data.moveColumn]['error'] = true;
             }
         };
 

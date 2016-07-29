@@ -1,19 +1,15 @@
 <div ng-if="error" class="alert alert-danger" role="alert">No way</div>
 <table>
   <tr ng-repeat="rows in sudokuBoard">
-    <td
-    ng-repeat="cell in rows track by $index"
-    ng-class="{'board': cell !== 0}" 
-    class="{{classError($index, rows)}}"
-    >
-    <input 
-    ng-if="cell === 0"
-    type="number"
-    ng-model="value"
-    ng-change="edit($index, value, rows)"
-    class="form-control" 
-    />
-    <span ng-if="cell !== 0">{{cell}}</span>
+    <td ng-repeat="cols in rows track by $index">
+      <input 
+      type="number"
+      ng-model="cols.val"
+      ng-change="edit(cols)"
+      ng-readonly="cols.resolved && !cols.valid"
+      class="form-control" 
+      ng-class="{'error': cols.error, 'success': cols.valid}"
+      />
     </td>
   </tr>
 </table>
